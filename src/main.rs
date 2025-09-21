@@ -21,9 +21,23 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     left.sort_unstable();
     right.sort_unstable();
 
-    let result: i32 = left.iter().zip(right.iter()).map(|(l, r)| (r - l).abs()).sum();
+    let result: i32 = left
+        .iter()
+        .zip(right.iter())
+        .map(|(l, r)| (r - l).abs())
+        .sum();
 
-    println!("Result: {}", result);
+    println!("Result Part One: {}", result);
+
+    let mut total_similarity: Vec<i32> = Vec::new();
+
+    left.iter().for_each(|l| {
+        let count = right.iter().filter(|r| *r == l).count();
+        let similarity = l * count as i32;
+        total_similarity.push(similarity as i32);
+    });
+
+    println!("Result Part Two: {}", total_similarity.into_iter().sum::<i32>());
 
     Ok(())
 }
